@@ -1,0 +1,130 @@
+import { CodeSurfer } from "code-surfer"
+import { nightOwl } from "@code-surfer/themes"
+
+import { themes } from 'mdx-deck'
+export const theme = {
+  ...themes.yellow,
+  styles: {
+    h1: { margin: "10px 0" },
+    h2: { margin: "5px 0" },
+    h3: { margin: "5px 0" },
+    p: { margin: "5px 0" },
+    li: { margin: "10px 0" }
+  }
+}
+
+# Write your own monad
+## in 15 minutes
+
+---
+
+# Pawel Badenski  
+### CTO @ Pricing Monkey  
+
+
+
+Twitter: <a href="https://twitter.com/pbadenski">@pbadenski</a>
+
+Email: <a mailto="pawel@pricingmonkey.com">pawel@pricingmonkey.com</a>
+
+<small style={{ position: "absolute", right: "15px", bottom: "15px" }}>
+*) shameful plug - we're looking for talented programmers!
+</small>
+
+---
+
+# Three parts
+
+<ol>
+  <li>Write a monad in JavaScript</li>
+  <li>Extend the monad</li>
+  <li>Q&A</li>
+</ol>
+
+Each part should be around 15 minutes long.
+
+---
+
+# Basic flow
+
+<ul>
+  <li>We'll be using JSFiddle</li>
+  <li>Each step <a href="https://wiki.c2.com/?OneUnitTestAtaTime">starts with a test</a></li>
+  <li>Steps are designed to be <a href="https://wiki.c2.com/?SmallSteps">really small</a></li>
+  <li>Making test pass should take around 2-5 minutes</li>
+  <li>After each step I will share an updated solution</li>
+</ul>
+
+---
+
+
+<CodeSurfer theme={nightOwl}>
+
+```js title="ap implemented using map function"
+const ap = (box, boxedFn) => {
+  return map(box, boxedFn.value);
+}
+```
+
+</CodeSurfer>
+
+---
+
+
+<CodeSurfer theme={nightOwl}>
+
+```js 5:7 title="flatMap implemented using map function" subtitle="flatten(map(..)) = flatMap"
+const flatten = (box) => {
+  return box.value;
+}
+
+const flatMap = (box, fn) => {
+  return flatten(map(box, fn));
+}
+```
+
+</CodeSurfer>
+
+---
+
+
+<CodeSurfer theme={nightOwl}>
+
+```js title="Type hierarchy"
+Functor:     map
+
+Applicative: map, ap
+
+Monad:       map, ap, flatMap
+
+```
+
+</CodeSurfer>
+
+
+---
+
+# Other popular monads
+
+<ul>
+  <li>Array/List</li>
+  <li>Either (monadic error handling)</li>
+  <li>Task/Async (monadic Promise)</li>
+  <li>Reader</li>
+  <li>Writer</li>
+  <li>State</li>
+</ul>
+
+---
+
+# JS implementations
+
+ - Beginner friendly: <a href="https://crocks.dev/docs/getting-started.html">Crocks</a>
+ - Intermediate: <a href="https://github.com/gcanti/fp-ts">fp-ts</a>
+ - For hackers: <a href="https://github.com/fantasyland/fantasy-land">Fantasy land</a>
+
+---
+
+# Thank you!
+## Questions, comments?
+
