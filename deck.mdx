@@ -1,5 +1,5 @@
-import { CodeSurfer } from "code-surfer"
-import { nightOwl } from "@code-surfer/themes"
+import { CodeSurfer, CodeSurferColumns, Step } from "code-surfer"
+import { nightOwl, duotoneDark, shadesOfPurple } from "@code-surfer/themes"
 
 import { themes } from 'mdx-deck'
 export const theme = {
@@ -45,15 +45,64 @@ Each part should be around 15 minutes long.
 
 ---
 
-# Basic flow
+# Before we begin
+
+<ul>
+  <li>Let's take 1 minute - send me a private message saying:
+    <ul>
+      <li>what do you expect from this workshop</li>
+      <li>what puzzles you about monads</li>
+    </ul>
+  </li>
+</ul>
+
+---
+
+# How
 
 <ul>
   <li>We'll be using JSFiddle</li>
   <li>Each step <a href="https://wiki.c2.com/?OneUnitTestAtaTime">starts with a test</a></li>
   <li>Steps are designed to be <a href="https://wiki.c2.com/?SmallSteps">really small</a></li>
-  <li>Making test pass should take around 2-5 minutes</li>
+  <li>Making test pass should take around 2-4 minutes</li>
   <li>After each step I will share an updated solution</li>
 </ul>
+
+---
+
+# Flow
+
+<ul>
+  <li>I share a test with you</li>
+  <li>You get 2-5 minutes to write implementation</li>
+  <li>I will share the time left at around half through the step</li>
+  <li>If you're struggling send me a private message and I will send you a hint</li>
+  <li>After time is up I will share my implementation with you</li>
+  <li>Rinse and repeat</li>
+</ul>
+
+---
+
+# Step 1: The simplest monad
+
+Follow JSFiddle link on the chat.
+
+---
+
+
+<CodeSurfer theme={nightOwl}>
+
+```js title="Type hierarchy"
+Functor:     map
+
+Applicative: map, ap
+
+Monad:       map, ap, flatMap
+
+```
+
+</CodeSurfer>
+
 
 ---
 
@@ -87,20 +136,116 @@ const flatMap = (box, fn) => {
 
 ---
 
+# Step 2: Option aka Maybe monad
 
-<CodeSurfer theme={nightOwl}>
+Follow JSFiddle link on the chat.
 
-```js title="Type hierarchy"
-Functor:     map
+---
 
-Applicative: map, ap
 
-Monad:       map, ap, flatMap
+<CodeSurferColumns themes={[nightOwl, shadesOfPurple]}>
 
+<Step>
+
+```js
+const x;
+
+if (x === undefined) {
+  sendToDatabase(inc(x));
+} else {
+  console.error("nothing written to database");
+}
+
+...
+
+if (x === undefined) {
+  sendToExternalService(dec(x));
+} else {
+  console.error("nothing written to the service");
+}
 ```
 
-</CodeSurfer>
+```js
+```
 
+</Step>
+
+<Step>
+
+```js
+const x;
+
+if (x === undefined) {
+  sendToDatabase(inc(x));
+} else {
+  console.error("nothing written to database");
+}
+
+...
+
+if (x === undefined) {
+  sendToExternalService(dec(x));
+} else {
+  console.error("nothing written to the service");
+}
+```
+
+```js 1
+const fold = (option, onSomeFn, onNoneFn) => ...;
+
+fold(
+  map(maybeX, inc),
+  value => sendToDatabase(value),
+  () => console.error("nothing written to database")
+)
+
+fold(
+  map(maybeX, inc),
+  value => sendToExternalService(value),
+  () => console.error("nothing sent to external service")
+)
+```
+
+</Step>
+
+<Step>
+
+```js
+const x;
+
+if (x === undefined) {
+  sendToDatabase(inc(x));
+} else {
+  console.error("nothing written to database");
+}
+
+...
+
+if (x === undefined) {
+  sendToExternalService(dec(x));
+} else {
+  console.error("nothing written to the service");
+}
+```
+
+```js 3:13
+const fold = (option, onSomeFn, onNoneFn) => ...;
+
+fold(
+  map(maybeX, inc),
+  value => sendToDatabase(value),
+  () => console.error("nothing written to database")
+)
+
+fold(
+  map(maybeX, inc),
+  value => sendToExternalService(value),
+  () => console.error("nothing sent to external service")
+)
+```
+
+</Step>
+</CodeSurferColumns>
 
 ---
 
